@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+  <style>
+    .product {
+      width: 200px;
+      padding: 10px;
+      float: left;
+      margin-right: 30px;
+      box-shadow: 0 0 4px black;
+    }
+  </style>
+</head>
+<body>
+<!--
+Обязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+<div class="product">
+  <div class="productName">Товар 1</div>
+  <img src="https://picsum.photos/id/367/200/300" alt="">
+  <button>В корзину</button>
+</div>
+<div class="product">
+  <div class="productName">Товар 2</div>
+  <img src="https://picsum.photos/id/425/200/300" alt="">
+  <button>В корзину</button>
+</div>
+<div class="product">
+  <div class="productName">Товар 3</div>
+  <img src="https://picsum.photos/id/429/200/300" alt="">
+  <button>В корзину</button>
+</div>
+
+<script>
+  "use strict";
+
+  /*
+  1. Установите всем элементам с классом "productName" размер шрифта 24px.
+   */
+
+ document
+    .querySelectorAll('.productName')
+    .forEach(el => el.style.fontSize = '24px');
+  /*
+  2. Установите всем элементам с классом "product" внешний отступ справа 50px.
+   */
+
+ document
+    .querySelectorAll('.product')
+    .forEach(el => el.style.marginRight = '50px');
+  /*
+  3. При клике на кнопку "В корзину" название кнопки должно поменяться на
+  "Добавлено" и кнопка должна стать неактивной.
+   */
+
+   document.body.addEventListener('click', e => {
+    const button = e.target;
+    if (button.tagName !== "BUTTON") {
+      return;
+    }
+    button.textContent = 'Добавлено';
+    button.disabled = true;
+  });
+  /*
+  4. Создайте полную (глубокую) копию элемента с классом product, измените в
+  этой копии путь до картинки на:
+  https://picsum.photos/id/1080/200/300
+  Поставьте название товара в данной копии "Товар 4" и замените последний
+  отображенный товар на странице на созданную копию. У данной копии также
+  должен правильно работать код из 3-го задания.
+   */
+
+ const productCopy = document.querySelector('.product').cloneNode(true);
+  productCopy
+    .querySelector('img')
+    .src = 'https://picsum.photos/id/1080/200/300';
+  productCopy.querySelector('.productName').textContent = 'Товар 4';
+  document.querySelector('.product:last-of-type').replaceWith(productCopy);
+  /*
+  5. По истечении 2 секунд с момента открытия страницы первый товар должен быть
+  удален из html.
+   */
+
+  setTimeout(() => document.querySelector('.product').remove(), 2000);
+</script>
+</body>
+</html>
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Homework</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
+  <style>
+    .message {
+      width: 150px;
+      padding: 20px;
+      background: lightgoldenrodyellow;
+      border: 1px solid orange;
+      visibility: hidden;
+    }
+    .error {
+      border: 0.3rem solid red;
+    }
+  </style>
+</head>
+<body>
+<!--
+Обязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+<input id="from" type="text">
+В инпуте написано: <span></span>
+
+<br>
+
+<button class="messageBtn">Показать блок</button>
+<div class="message">
+  Привет :)
+</div>
+
+<br>
+
+<form>
+  <label>
+    Первый инпут:
+    <input class="form-control" type="text">
+  </label>
+  <br>
+  <br>
+  <label>
+    Второй инпут:
+    <select class="form-control">
+      <option value=""></option>
+      <option value="1">Один</option>
+      <option value="2">Два</option>
+    </select>
+  </label>
+  <br>
+  <br>
+  <button>Отправить</button>
+</form>
+
+<script>
+  "use strict";
+
+  /*
+  1. При изменении значения в input с id="from", значение содержащееся в нем
+  должно моментально отображаться в span. То есть при печати в input'е тег span
+  также должен меняться.
+  */
+  const spanEl = document.querySelector('span');
+  document.querySelector('input').addEventListener('input', e => {
+    spanEl.textContent = e.target.value;
+  });
+    
+   /*
+  2. При клике на кнопку с классом messageBtn необходимо элементу с классом
+  message:
+  1) добавить два класса: animate__animated и animate__fadeInLeftBig
+  2) поставить данному элементу стиль visibility в значение 'visible'.
+   */
+  const message = document.querySelector('.message');
+  document.querySelector('button').addEventListener('click', () => {
+    message.style.visibility = 'visible';
+    message.classList.add('animate__animated', 'animate__fadeInLeftBig');
+  });
+
+
+  /*
+  3. Необходимо при отправке формы проверить, заполнены ли все поля в этой
+  форме. Если какое-либо поле не заполнено, форма не должна отправляться, также
+  должны быть подсвечены незаполненные поля (необходимо поставить класс error
+  незаполненным полям).
+  Как только пользователь начинает заполнять какое-либо поле, необходимо,
+  при вводе в данное поле, произвести проверку:
+  Если поле пустое, необходимо данное поле подсветить (поставить класс error
+  данному полю).
+  Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
+   */
+
+  const formEl = document.querySelector('form');
+  const formControlEls = formEl.querySelectorAll('input, select');
+  formEl.addEventListener('submit', event => {
+    formControlEls.forEach(formControlEl => {
+      if (formControlEl.value === '') {
+        formControlEl.classList.add('error');
+        event.preventDefault();
+      }
+    });
+  });
+
+  formEl.addEventListener('input', event => {
+    if (!event.target.classList.contains('form-control')) {
+      return;
+    }
+    event.target.value === ''
+      ? event.target.classList.add('error')
+      : event.target.classList.remove('error');
+  });
+</script>
+</body>
+</html>
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <style>
+    i {
+      font-size: 50px;
+    }
+    .golden {
+      color: gold;
+    }
+  </style>
+</head>
+<body>
+<!--
+Обязательное задание.
+
+Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
+стирать, код с решением задачи пишем под комментарием.
+-->
+
+<div class="stars_container">
+  <i class="fas fa-star"></i>
+  <i class="fas fa-star"></i>
+  <i class="fas fa-star"></i>
+  <i class="fas fa-star"></i>
+  <i class="fas fa-star"></i>
+</div>
+
+<script>
+  "use strict";
+
+  /*
+  1. При наведении на любую из звезд, данной звезде должен ставиться класс
+  golden, также такой класс должен ставиться всем звездам до нее слева.
+  */
+
+  document.querySelector('.stars_container')
+    .addEventListener('mouseover', e => {
+      if (!e.target.classList.contains('fas')) {
+        return;
+      }
+      let star = e.target;
+      do {
+        star.classList.add('golden');
+        star = star.previousElementSibling;
+      } while (star);
+    });
+
+  /*
+  2. Когда мы уводим курсор мыши от звезды, все поставленные классы из первого
+  задания должны быть удалены.
+   */
+
+  document.querySelector('.stars_container')
+  .addEventListener('mouseout', e => {
+    if (!e.target.classList.contains('fas')) {
+      return;
+    }
+    let star = e.target;
+    do {
+      star.classList.remove('golden');
+      star = star.previousElementSibling;
+    } while (star);
+  });
+
+  /*
+  3. Когда мы переводим мышь от одной звезды к другой, у нас могут мигать
+  звезды (временно могут становиться черными). Почему так? Напишите словами.
+  Можем ли мы это исправить? Если да, то предложите решение.
+  */
+   /*
+  Дело в том, что между звездами есть пробел, в html это перенос строки. Мы
+  можем:
+  1. Записать все теги i слитно, без пробелов и переносов строк в html.
+  2. Можем добавить классу .fa или .fas свойство margin-right: -5px;
+  3. Может добавить классу .stars_container свойство display: flex;
+  4. Можем исправить это в JavaScript удалив все текстовые узлы в теге с
+  классом stars_container, что в примере ниже.
+   */
+  document.querySelector('.stars_container').childNodes.forEach(node => {
+    if (node.nodeName === '#text') {
+      node.remove();
+    }
+  });
+
+
+
+</script>
+</body>
+</html>
